@@ -82,17 +82,25 @@ public class ProductosListaActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(nombreLista);
     }
 
-    public void cargarListas(ListView lv){
+    public void cargarListas(final ListView lv){
         /*for (int i = 0; i < productos.size(); i++) {
             System.out.println(productos.get(i).toString());
         }*/
-
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //int productoSeleccionado = productos.indexOf(parent.getAdapter().getItem(position));
-                Toast.makeText(getApplicationContext(), parent.getAdapter().getItem(position).toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), parent.getAdapter().getItem(position).toString(), Toast.LENGTH_LONG).show();
+                lv.isItemChecked(position);
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Producto selectedPro = (Producto) parent.getAdapter().getItem(position);
+                opcionesElemento(selectedPro,position);
+                return false;
             }
         });
     }
@@ -216,5 +224,30 @@ public class ProductosListaActivity extends AppCompatActivity {
 
         return builder.show();
     }
+    public void opcionesElemento(final Producto selectedPro, final int posicion) {
+        final CharSequence[] opciones = {"Añadido al carrito", "Eliminar"};
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Opciones");
+        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if(item == 0){
+
+                }
+                else if (item == 1) {
+                    Boolean wasRemoved = productos.remove(selectedPro);
+                    if (wasRemoved) {
+                        DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+nombreLista+"/Detalle/"+selectedPro.getNombre());
+                        refEliminar.removeValue();
+                        //Toast.makeText(getApplicationContext(), "Estoy removiendo del adapter, no de firebase", Toast.LENGTH_SHORT).show();
+
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

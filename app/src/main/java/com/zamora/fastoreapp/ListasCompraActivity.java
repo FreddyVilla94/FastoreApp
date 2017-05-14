@@ -1,7 +1,9 @@
 package com.zamora.fastoreapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -148,6 +150,15 @@ public class ListasCompraActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ListaCompras selectedList = (ListaCompras) parent.getAdapter().getItem(position);
+                opcionesElemento(selectedList);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -202,7 +213,52 @@ public class ListasCompraActivity extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
+    /**
+     * Opciones al hacer una pulsación larga en un elemento de la lista
+     */
+    public void opcionesElemento(final ListaCompras selectedList) {
+        final CharSequence[] opciones = {"Ver productos", "Configuración", "Compartir", "Eliminar"};
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Opciones");
+        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if(item == 2){
+                    final DatabaseReference refHijoUsuario = database.getReference("Usuarios/acnoligia94/Listas Compartidas/"+user[0]);
+                    refHijoUsuario.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            DataSnapshot us = dataSnapshot.child(selectedList.getNombre());
+                            boolean x = us.exists();
+                            if(x == false){
+                                Map<String,Object> hijoLista = new HashMap<String,Object>();
+                                hijoLista.put(selectedList.getNombre(),selectedList.getId());
+                                refHijoUsuario.updateChildren(hijoLista);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                if (item == 3) {
+                    Boolean wasRemoved = arregloListasCompra.remove(selectedList);
+                    if (wasRemoved) {
+                        DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+selectedList.getNombre());
+                        refEliminar.removeValue();
+                        //Toast.makeText(getApplicationContext(), "Estoy removiendo del adapter, no de firebase", Toast.LENGTH_SHORT).show();
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
 
 }
