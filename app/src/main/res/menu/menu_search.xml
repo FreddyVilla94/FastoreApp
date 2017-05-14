@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itemAdd"
+        android:title="Agregar"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom" >
+    </item>
+    <item
+        android:id="@+id/itemProfile"
+        android:title="Ver Perfil"
+        android:icon="@drawable/photo"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom" >
+    </item>
+    <!--<item
+        android:id="@+id/itemSearch"
+        android:title="Buscar"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="2"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom" >
+    </item>-->
+
+</menu>

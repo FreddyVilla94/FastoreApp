@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "811516538972",
+    "firebase_url": "https://fastoreapp.firebaseio.com",
+    "project_id": "fastoreapp",
+    "storage_bucket": "fastoreapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811516538972:android:105944ed9b8bac93",
+        "android_client_info": {
+          "package_name": "com.zamora.fastoreapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811516538972-thp2u0k53kl7hurp6h0fdkeu940cu57r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zamora.fastoreapp",
+            "certificate_hash": "8d2a2dd7564d59a5cb009e5b6a60a5d9972ac1f3"
+          }
+        },
+        {
+          "client_id": "811516538972-53m04vbala57cts8tp8hna8kr1gk78ah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5B83TmtbIjHQJHOerd34iZp9ZgqCN-Ck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811516538972-53m04vbala57cts8tp8hna8kr1gk78ah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

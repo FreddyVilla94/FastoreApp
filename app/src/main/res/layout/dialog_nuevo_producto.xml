@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_vertical_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:text="Agregar Producto"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/nombre_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:inputType="textCapSentences"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="Nombre del producto"
+        android:background="@drawable/edittext_background">
+    </EditText>
+
+    <EditText
+        android:id="@+id/precio_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:inputType="numberDecimal"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="Precio (Opcional)"
+        android:background="@drawable/edittext_background">
+    </EditText>
+
+    <Button
+        android:id="@+id/btnCrear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_between"
+        android:paddingTop="@dimen/padding_between"
+        android:text="Agregar"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

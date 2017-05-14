@@ -1,0 +1,221 @@
+[33mcommit 1915866c86d9a8d84d1d02735deacf75728f7557[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sat May 13 19:31:54 2017 -0600
+
+    Icono y LongClick
+
+[33mcommit 30844941f4d84dd6fb7f746faa1e2e46f6693088[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sat May 13 19:29:12 2017 -0600
+
+    Icono y longClick
+
+[33mcommit 50493b2e6625a05aec6cdee9a05fe0468a83736f[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Sat May 13 15:03:02 2017 -0600
+
+    consultas
+
+[33mcommit 3426bfeffe3dad8682eef4c00b6b2a8c5d4784fb[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Thu May 11 22:14:42 2017 -0600
+
+    inserciones firebase
+
+[33mcommit af6dda9ff8e5741945611dee0563efc138158247[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Thu May 11 20:49:42 2017 -0600
+
+    cambios firebase
+
+[33mcommit ef3466a5c7e510b27ee8d5cacf89862cd8f01532[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Thu May 11 17:02:38 2017 -0600
+
+    Merge branch 'master' of C:\Users\Freddy\Documents\GitHub\FasTore-Android- with conflicts.
+
+[33mcommit 688a139e5831d2615ea2c5b8e8078ceaa4aa3aeb[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Thu May 11 15:47:22 2017 -0600
+
+    Arreglo apellido
+
+[33mcommit 5ea5919a0d1dec0e8dc471a355f35cfe14a62dff[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Wed May 10 11:01:36 2017 -0600
+
+    asdfgh
+
+[33mcommit 74674261bb2e07f5dc0e7a491812d6b92d3e6d4a[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Tue May 9 18:34:46 2017 -0600
+
+    login
+
+[33mcommit 136614b59f7ac2face2cdc5b2a756a7b71feff2f[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Mon May 8 21:06:51 2017 -0600
+
+    fire
+
+[33mcommit 04e2c2d1caeb45627bbeb4864fc33bb9d124be4d[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Wed May 3 19:45:08 2017 -0600
+
+    clase dialogProfile
+
+[33mcommit 87885bccf2da17fa900947bf790c449f3ffaf07b[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Wed May 3 19:34:43 2017 -0600
+
+    dialog profile
+
+[33mcommit 7dfebbc2cb26e8812a367dea7196ceac72da6758[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Tue May 2 20:11:47 2017 -0600
+
+    dialog profile
+
+[33mcommit 1f2e9616635715300e120e0fd8d70dd3192354b7[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Mon May 1 18:26:52 2017 -0600
+
+     Agregando productos (Texto)
+
+[33mcommit 8d3bd48f66acbda61769f2f79daba88331c0fb7a[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sun Apr 30 23:17:24 2017 -0600
+
+    Agregando productos (Reconocimiento de voz)
+
+[33mcommit dcedf83a85edc4e2b08f4fb32370e13d99ad45f4[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sun Apr 30 18:52:36 2017 -0600
+
+    Agregando productos
+
+[33mcommit 9003263c4642c77864e4f97bd4ff0081497a5b03[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sun Apr 30 00:19:00 2017 -0600
+
+    Ventana de Productos
+
+[33mcommit e354e0895424802f4f3bab79c0c7190c0025cc70[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Fri Apr 28 00:02:00 2017 -0600
+
+    Función botón crear
+
+[33mcommit e145b8a74d4d21b5fffe48a2d954313f71b813e6[m
+Author: Kevin Zamora Arias <kzamo.95@gmail.com>
+Date:   Thu Apr 27 20:55:33 2017 -0600
+
+    Update ListasCompraActivity.java
+
+[33mcommit 718e1dabdffe90ebdb5678321f39cd1cf6d1f43b[m
+Author: Kevin Zamora Arias <kzamo.95@gmail.com>
+Date:   Thu Apr 27 20:49:54 2017 -0600
+
+    Actualizando clase Usuario
+
+[33mcommit 15096f75d14077a3f2af45f076cb1e04ae0e5664[m
+Author: Kevin Zamora Arias <kzamo.95@gmail.com>
+Date:   Thu Apr 27 20:45:18 2017 -0600
+
+    List View Productos Compra XML
+
+[33mcommit 4446d4adc8cd0534c7a033bd4568c78b6acc5970[m
+Author: Kevin Zamora Arias <kzamo.95@gmail.com>
+Date:   Thu Apr 27 20:41:59 2017 -0600
+
+    Adapter Productos Compra
+
+[33mcommit 7bbd8ab0592811311295e1e139d10941ee7f89e4[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Thu Apr 27 20:26:45 2017 -0600
+
+    boton logout
+
+[33mcommit 3bb3d104befebcf73f04abcdac3120f56bfe5ed0[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Tue Apr 25 23:39:31 2017 -0600
+
+    cambios interfaz login
+
+[33mcommit 7d4ba1df0109a0f75a29393da93fc355292a2072[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Mon Apr 3 17:41:35 2017 -0600
+
+    Forma alternativa de crear nueva lista
+
+[33mcommit 1e1380903c14000da736f4ab3f990758037f281d[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sun Apr 2 23:29:53 2017 -0600
+
+    Ventana de nueva lista, LISTA!
+
+[33mcommit 5a242f7b657f27d82261de75f7d34b692f2cfa67[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sun Apr 2 00:32:26 2017 -0600
+
+    New shopping list Dialog
+
+[33mcommit 46f426abff7cdfb16d9d2b9ec29fce90ea18afef[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Sat Apr 1 13:36:28 2017 -0600
+
+    Listing user's shopping lists
+
+[33mcommit bef368c94bb96b800ed5bb3cb78dbb969038307e[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Thu Mar 30 23:24:01 2017 -0600
+
+    Adding Producto, Detalle Lista, Listas Compartidas classes
+
+[33mcommit 23aeaa37667493345b04d70b8e15553d9a0186e0[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Thu Mar 30 12:56:24 2017 -0600
+
+    cambio icon
+
+[33mcommit 4399b41d7bb23d2d0e2f8209a4c3d6099c1ba5d1[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Thu Mar 30 00:29:27 2017 -0600
+
+    login con gmail
+
+[33mcommit 6ce6ac0d6f3559155c0e41f202f8e00187e773ca[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Wed Mar 29 23:53:41 2017 -0600
+
+    Adding usuario & lista_compra classes
+
+[33mcommit 8a7f2dae463afc887ac5297ac7e8ee49a946b1ab[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Wed Mar 29 15:35:57 2017 -0600
+
+    text
+
+[33mcommit 4fd08259ee9471b88d06536dbf4081e1cdc46dd7[m
+Author: FreddyVilla94 <fevig1994@gmail.com>
+Date:   Wed Mar 29 15:27:19 2017 -0600
+
+    text
+
+[33mcommit 93ce13b7b3d484c0342d6939f6987bb9f516e970[m
+Author: Kevin Zamora Arias <kzamo.95@gmail.com>
+Date:   Tue Mar 28 18:34:37 2017 -0600
+
+    Update activity_main.xml
+
+[33mcommit cd15673c7a8848ef152bc3264ed4096b6896c1f9[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Tue Mar 28 18:26:33 2017 -0600
+
+    Creating project with Android Studio
+
+[33mcommit 51c531b094278ba678649415f622124500d92cd4[m
+Author: Kevin Zamora <kzamo.95@gmail.com>
+Date:   Tue Mar 28 18:25:36 2017 -0600
+
+    first commit

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_vertical_margin">
+
+    <EditText
+        android:id="@+id/nombre_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:layout_marginTop="@dimen/padding_between"
+        android:ems="10"
+        android:inputType="textCapSentences"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:selectAllOnFocus="true"
+        android:background="@drawable/edittext_background" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/nombre_input"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:layout_marginTop="@dimen/padding_between"
+        android:background="#C8C9CB" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOTIFICACIONES"
+        android:layout_below="@+id/divider"
+        android:id="@+id/lblNotificaciones"/>
+
+    <EditText
+        android:id="@+id/fecha_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblNotificaciones"
+        android:layout_marginTop="@dimen/padding_between"
+        android:ems="10"
+        android:hint="Fecha"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:focusable="false"
+        android:background="@drawable/edittext_background" />
+
+    <!--<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:layout_alignBaseline="@+id/fecha_input"
+        android:layout_alignBottom="@+id/fecha_input"
+        android:layout_toEndOf="@+id/fecha_input"
+        android:id="@+id/btnFecha" />-->
+
+    <EditText
+        android:id="@+id/hora_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fecha_input"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:layout_marginTop="@dimen/padding_between"
+        android:ems="10"
+        android:hint="Hora"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:focusable="false"
+        android:background="@drawable/edittext_background" />
+
+    <CheckBox
+        android:id="@+id/recordar_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/hora_input"
+        android:layout_below="@+id/hora_input"
+        android:checked="false"
+        android:text="Recordar" />
+
+    <Button
+        android:id="@+id/btnCrear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/padding_between"
+        android:paddingTop="@dimen/padding_between"
+        android:text="Crear"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
