@@ -83,7 +83,7 @@ public class ListasCompraActivity extends AppCompatActivity{
             }
         });
 
-        //idUsuario = "10";
+        idUsuario = "10";
         //leerUsuario(idUsuario);
         cargarListas(lv);
     }
