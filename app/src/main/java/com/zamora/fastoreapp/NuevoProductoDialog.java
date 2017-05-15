@@ -16,16 +16,16 @@ import com.zamora.fastoreapp.Clases.Producto;
 
 public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
 
-    private String nombreLista;
+    private String nombreLista, nombreUser;
     private EditText txtNombre, txtPrecio;
     private Button btnAgregar;
     public Context context;
 
 
-    public NuevoProductoDialog(Context context, String nombreLista) {
+    public NuevoProductoDialog(Context context, String nombreLista, String nombreUser) {
         super(context);
         this.context = context;
-
+        this.nombreUser = nombreUser;
         this.nombreLista = nombreLista;
     }
 
@@ -56,7 +56,7 @@ public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
                 }
                 //DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ListasCompraActivity.user[0]);
                 //refProducto.push().setValue(nuevoProducto);
-                nuevoProducto.insertar(nuevoProducto,nombreLista);
+                nuevoProducto.insertar(nuevoProducto,nombreLista,nombreUser);
                 /*if (idRetorno != -1) {
                     Toast.makeText(context, "Se insertó " + nuevoProducto.toString(), Toast.LENGTH_SHORT).show();
                 } else {

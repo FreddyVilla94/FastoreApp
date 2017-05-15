@@ -27,8 +27,6 @@ import com.zamora.fastoreapp.Clases.Producto;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.zamora.fastoreapp.ListasCompraActivity.user;
-
 /**
  * Created by Sergio on 13/04/2017.
  */
@@ -38,6 +36,7 @@ public class ProductosListaActivity extends AppCompatActivity {
     private AdapterProductosCompra adapter;
     String idLista;
     String nombreLista;
+    String nombreUser;
     ListaCompras listaCompras;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     final public static ArrayList<Producto> productos  = new ArrayList<>();
@@ -50,16 +49,12 @@ public class ProductosListaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idLista = intent.getStringExtra("idLista");
         nombreLista = intent.getStringExtra("nombreLista");
+        nombreUser = intent.getStringExtra("idUsuario");
         //listaCompras = new ListaCompras();
         //listaCompras.leer(this, nombreLista);
         //String nombre = listaCompras.getNombre();
 
-        final DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ user[0]+"/Listas/"+nombreLista+"/Detalle");
-
-        ListView lv = (ListView) findViewById(R.id.productList);
-        adapter = new AdapterProductosCompra(this, productos);
-        lv.setAdapter(adapter);
-
+        final DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ nombreUser+"/Listas/"+nombreLista+"/Detalle");
         refHijoUsuario.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,23 +73,17 @@ public class ProductosListaActivity extends AppCompatActivity {
         });
 
         //productos = listaCompras.getDetalle();
-        cargarListas(lv);
+        cargarListas();
         getSupportActionBar().setTitle(nombreLista);
     }
 
-    public void cargarListas(final ListView lv){
+    public void cargarListas(){
         /*for (int i = 0; i < productos.size(); i++) {
             System.out.println(productos.get(i).toString());
         }*/
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //int productoSeleccionado = productos.indexOf(parent.getAdapter().getItem(position));
-                //Toast.makeText(getApplicationContext(), parent.getAdapter().getItem(position).toString(), Toast.LENGTH_LONG).show();
-                lv.isItemChecked(position);
-            }
-        });
-
+        ListView lv = (ListView) findViewById(R.id.productList);
+        adapter = new AdapterProductosCompra(this, productos);
+        lv.setAdapter(adapter);
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -124,7 +113,7 @@ public class ProductosListaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemAdd:
-                NuevoProductoDialog npd = new NuevoProductoDialog(ProductosListaActivity.this,nombreLista);
+                NuevoProductoDialog npd = new NuevoProductoDialog(ProductosListaActivity.this,nombreLista,nombreUser);
                 npd.show();
                 //onRestart();
 
@@ -196,7 +185,7 @@ public class ProductosListaActivity extends AppCompatActivity {
                                 Producto nuevoProducto = new Producto();
                                 nuevoProducto.setNombre(capText);
 
-                                nuevoProducto.insertar(nuevoProducto,nombreLista);
+                                nuevoProducto.insertar(nuevoProducto,nombreLista,nombreUser);
                                 /*if (idRetorno != -1) {
                                     Toast.makeText(getApplicationContext(), "Se insertó " + nuevoProducto.toString(), Toast.LENGTH_SHORT).show();
                                 } else {
@@ -237,7 +226,7 @@ public class ProductosListaActivity extends AppCompatActivity {
                 else if (item == 1) {
                     Boolean wasRemoved = productos.remove(selectedPro);
                     if (wasRemoved) {
-                        DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+nombreLista+"/Detalle/"+selectedPro.getNombre());
+                        DatabaseReference refEliminar = database.getReference("Usuarios/"+nombreUser+"/Listas/"+nombreLista+"/Detalle/"+selectedPro.getNombre());
                         refEliminar.removeValue();
                         //Toast.makeText(getApplicationContext(), "Estoy removiendo del adapter, no de firebase", Toast.LENGTH_SHORT).show();
 
