@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -264,6 +264,7 @@ public class ListasCompraActivity extends AppCompatActivity{
     public void compartirLista(final ListaCompras listaCompartir){
         final AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         final EditText correo = new EditText(this);
+        correo.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         builder1.setTitle("Compartir Lista Compras");
         builder1.setView(correo);
         builder1.setPositiveButton("Compartir", new DialogInterface.OnClickListener() {
@@ -271,7 +272,7 @@ public class ListasCompraActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 String x = correo.getText().toString();
                 String cadenaM = x.toLowerCase();
-                Toast.makeText(getApplicationContext(),cadenaM,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),cadenaM,Toast.LENGTH_LONG).show();
                 String[] parse = cadenaM.split("@");
                 final DatabaseReference refHijoUsuario = database.getReference("Usuarios/"+parse[0]+"/Listas Compartidas/"+user[0]);
                 Map<String,Object> hijoLista = new HashMap<String,Object>();
