@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.zamora.fastoreapp.Database.DatabaseContract;
 import com.zamora.fastoreapp.Database.DatabaseHelper;
 
@@ -34,6 +32,7 @@ public class ListaCompras {
     private String idUsuario;
     private String fechaCompra;
     private Double montoTotal;
+    private static Context context;
     private ArrayList<Producto> detalle;
     private ArrayList<Usuario> usuariosPermitidos;
 
@@ -50,6 +49,14 @@ public class ListaCompras {
         this.montoTotal = montoTotal;
         detalle = new ArrayList<>();
         usuariosPermitidos = new ArrayList<>();
+    }
+
+    public static Context getContext() {
+        return context;
+    }
+
+    public static void setContext(Context context) {
+        ListaCompras.context = context;
     }
 
     public String getId() {
@@ -123,16 +130,18 @@ public class ListaCompras {
      * Función que inserta una lista de compras en la base de datos
      */
     public void insertar(final ListaCompras lista) {
-        final DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ user[0]+"/Listas");
-        refHijoUsuario.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference refHijoUsuarioL = database.getReference("Usuarios"+"/"+ user[0]+"/Listas");
+        Map<String,Object> hijoLista = new HashMap<String,Object>();
+        hijoLista.put(lista.getNombre(),lista);
+        refHijoUsuarioL.updateChildren(hijoLista);
+        Toast.makeText(context,"Insertando lista de compras",Toast.LENGTH_LONG).show();
+        /*refHijoUsuarioL.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DataSnapshot us = dataSnapshot.child(lista.getNombre());
                 boolean x = us.exists();
                 if(x == false){
-                    Map<String,Object> hijoLista = new HashMap<String,Object>();
-                    hijoLista.put(lista.getNombre(),lista);
-                    refHijoUsuario.updateChildren(hijoLista);
+
                 }
             }
 
@@ -140,7 +149,7 @@ public class ListaCompras {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
 

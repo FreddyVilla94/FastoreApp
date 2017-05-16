@@ -16,6 +16,24 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Titulo Frase"
         android:id="@+id/productName"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_below="@+id/fechaLista"/>
+
+    <!--<CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/boxChecked"
+        android:layout_toStartOf="@id/imageView2"
+        android:layout_centerVertical="true"
+        />-->
+
+    <ImageView
+        android:id="@+id/deleteIco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:src="@android:drawable/ic_menu_delete"
+        android:contentDescription="Eliminar producto" />
 
 </LinearLayout>

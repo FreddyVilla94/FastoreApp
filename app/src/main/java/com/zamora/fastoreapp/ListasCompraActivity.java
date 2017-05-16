@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -78,20 +79,23 @@ public class ListasCompraActivity extends AppCompatActivity{
                         //adapter.notifyDataSetChanged();
                     }
                     if(snapshot.getKey().equals("Listas Compartidas")){
-                        for (DataSnapshot datosListasCompartidas : snapshot.getChildren()){
-                            String userCompartio = datosListasCompartidas.getKey();
-                            ListaCompras nombreListaCompartio = datosListasCompartidas.getValue(ListaCompras.class);
-                            final DatabaseReference refUserComp = database.getReference("Usuarios/"+ userCompartio+"/Listas/"+nombreListaCompartio.getNombre());
-                            //Toast.makeText(getApplicationContext(),refUserComp.getKey(),Toast.LENGTH_LONG).show();
-                            //Toast.makeText(getApplicationContext(),nombreListaCompartio.getNombre(),Toast.LENGTH_LONG).show();
-                            ListaCompras listaUserComp = datosListasCompartidas.getValue(ListaCompras.class);
-                            listaUserComp.setIdUsuario(userCompartio);
-                            //Toast.makeText(getApplicationContext(),listaUserComp.getDetalle().toString(),Toast.LENGTH_LONG).show();
-                            arregloListasCompra.add(listaUserComp);
+                        for (DataSnapshot datosListasCompartidas : snapshot.getChildren()) {
+                            for (DataSnapshot datosListasCompartidasN : datosListasCompartidas.getChildren()) {
+                                String userCompartio = datosListasCompartidas.getKey();
+                                ListaCompras nombreListaCompartio = datosListasCompartidasN.getValue(ListaCompras.class);
+                                final DatabaseReference refUserComp = database.getReference("Usuarios/" + userCompartio + "/Listas/" + nombreListaCompartio.getNombre());
+                                //Toast.makeText(getApplicationContext(),nombreListaCompartio.getNombre(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(),nombreListaCompartio.getNombre(),Toast.LENGTH_LONG).show();
+                                ListaCompras listaUserComp = datosListasCompartidasN.getValue(ListaCompras.class);
+                                listaUserComp.setIdUsuario(userCompartio);
+                                //Toast.makeText(getApplicationContext(),listaUserComp.getDetalle().toString(),Toast.LENGTH_LONG).show();
+                                arregloListasCompra.add(listaUserComp);
+                            }
                         }
-
+                        //adapter.notifyDataSetChanged();
                     }
                 }
+                //Toast.makeText(getApplicationContext(),"Cargandos Listas de compras",Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
             }
 
@@ -118,6 +122,7 @@ public class ListasCompraActivity extends AppCompatActivity{
                     Map<String, Object> newUser = new HashMap<String, Object>();
                     newUser.put("Informacion",new Usuario(nombre,email,user[0]));
                     refUSuarios.child(user[0]).updateChildren(newUser);
+                    //Toast.makeText(getApplicationContext(),"Insertando Usuario",Toast.LENGTH_LONG).show();
                 }
                 //Toast.makeText(getApplicationContext(),dataSnapshot.getKey(),Toast.LENGTH_LONG).show();
                 //arregloListasCompra.removeAll(arregloListasCompra);
@@ -249,9 +254,20 @@ public class ListasCompraActivity extends AppCompatActivity{
                 else if (item == 3) {
                     Boolean wasRemoved = arregloListasCompra.remove(selectedList);
                     if (wasRemoved) {
-                        DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+selectedList.getNombre());
-                        refEliminar.removeValue();
-                        //Toast.makeText(getApplicationContext(), "Estoy removiendo del adapter, no de firebase", Toast.LENGTH_SHORT).show();
+                        String tipoLista = selectedList.getFechaCompra();
+                        int pos = tipoLista.indexOf('@');
+                        if(pos == -1){
+                            DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+selectedList.getNombre());
+                            refEliminar.removeValue();
+                        }
+                        else{
+                            DatabaseReference refEliminar1 = database.getReference("Usuarios/"+user[0]+"/Listas Compartidas/"+selectedList.getIdUsuario()+"/"+selectedList.getNombre());
+                            refEliminar1.removeValue();
+                            //Toast.makeText(getApplicationContext(),tipoLista,Toast.LENGTH_LONG).show();
+                        }
+
+
+                        Toast.makeText(getApplicationContext(), "Eliminando la lista de compras", Toast.LENGTH_SHORT).show();
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -273,21 +289,26 @@ public class ListasCompraActivity extends AppCompatActivity{
                 String x = correo.getText().toString();
                 String cadenaM = x.toLowerCase();
                 //Toast.makeText(getApplicationContext(),cadenaM,Toast.LENGTH_LONG).show();
-                String[] parse = cadenaM.split("@");
-                final DatabaseReference refHijoUsuario = database.getReference("Usuarios/"+parse[0]+"/Listas Compartidas/"+user[0]);
-                Map<String,Object> hijoLista = new HashMap<String,Object>();
-                hijoLista.put("nombre",listaCompartir.getNombre());
-                hijoLista.put("fechaCompra",email);
-                refHijoUsuario.updateChildren(hijoLista);
-                /*refHijoUsuario.addValueEventListener(new ValueEventListener() {
+                final String[] parse = cadenaM.split("@");
+                final DatabaseReference refU = database.getReference("Usuarios");
+
+                refU.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        DataSnapshot us = dataSnapshot.child(listaCompartir.getNombre());
+                        DataSnapshot us = dataSnapshot.child(parse[0]);
                         boolean x = us.exists();
-                        if(x == false){
-                            Map<String,Object> hijoLista = new HashMap<String,Object>();
-                            hijoLista.put(listaCompartir.getNombre(),listaCompartir.getId());
-                            refHijoUsuario.updateChildren(hijoLista);
+                        if(x == true){
+                            final DatabaseReference refHijoUsuario = database.getReference("Usuarios/"+parse[0]+"/Listas Compartidas/"+user[0]);
+                            Map<String,Object> hijoP = new HashMap<String, Object>();
+                            Map<String,String> hijoLista = new HashMap<String,String>();
+                            hijoLista.put("nombre",listaCompartir.getNombre());
+                            hijoLista.put("fechaCompra",email);
+                            hijoP.put(listaCompartir.getNombre(),hijoLista);
+                            refHijoUsuario.updateChildren(hijoP);
+                            Toast.makeText(getApplicationContext(),"Compartiendo lista de compras",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),"No existe ningun usuario con ese correo en el sitema",Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -295,7 +316,7 @@ public class ListasCompraActivity extends AppCompatActivity{
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });*/
+                });
             }
         });
         AlertDialog alert = builder1.create();

@@ -2,6 +2,9 @@ package com.zamora.fastoreapp.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +13,24 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.zamora.fastoreapp.Clases.Producto;
+import com.zamora.fastoreapp.ProductosListaActivity;
 import com.zamora.fastoreapp.R;
 
 import java.util.ArrayList;
+
+import static com.zamora.fastoreapp.ListasCompraActivity.user;
 
 /**
  * Created by Sergio on 13/04/2017.
  */
 
 public class AdapterProductosCompra extends BaseAdapter implements Filterable {
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
     protected Activity activity;
     private static LayoutInflater inflater = null;
 
@@ -59,13 +69,25 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
             v = inflater.inflate(R.layout.item_producto_compra, null);
         }
 
-        Producto dir = filteredItems.get(position);
+        final Producto dir = filteredItems.get(position);
 
-        TextView nombre = (TextView) v.findViewById(R.id.productName);
+        final TextView nombre = (TextView) v.findViewById(R.id.productName);
         nombre.setText(dir.getNombre());
 
-        //v.setBackgroundColor(Color.parseColor("#3f834D"));
-        v.setPadding(50,50,50,50);
+        ImageView deleteIco = (ImageView) v.findViewById(R.id.deleteIco);
+        deleteIco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDelete(dir.getNombre(), position);
+            }
+        });
+
+        if (dir.getInCart()) {
+            v.setBackgroundColor(Color.parseColor("#00FFF0"));
+        } else {
+            v.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        v.setPadding(25,25,25,25);
         return v;
     }
 
@@ -101,5 +123,29 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
                 notifyDataSetChanged();
             }
         };
+    }
+    public AlertDialog confirmDelete(final String speechText, final int position) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Eliminar")
+                .setMessage(speechText)
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        filteredItems.remove(position);
+                        notifyDataSetChanged();
+                        DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+ ProductosListaActivity.nombreLista+"/Detalle/"+speechText);
+                        refEliminar.removeValue();
+                        Toast.makeText(activity, "Eiminando Producto", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity, "Me ztaz vorrando karnal", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        return builder.show();
+
     }
 }

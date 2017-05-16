@@ -123,7 +123,7 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener{
                 nuevaLista.setNombre(txtNombre.getText().toString());
                 nuevaLista.setIdUsuario(ListasCompraActivity.user[0]);
                 nuevaLista.setFechaCompra(txtFecha.getText().toString());
-
+                nuevaLista.setContext(context);
                 nuevaLista.insertar(nuevaLista);
                 Intent intent = new Intent(context, ProductosListaActivity.class);
                 intent.putExtra("idLista", nuevaLista.getId());

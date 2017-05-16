@@ -51,6 +51,7 @@ public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
             case R.id.btnCrear:
                 Producto nuevoProducto = new Producto();
                 nuevoProducto.setNombre(txtNombre.getText().toString());
+                nuevoProducto.setContext(context);
                 if (!txtPrecio.getText().toString().equals("")) {
                     nuevoProducto.setPrecio(Double.parseDouble(txtPrecio.getText().toString()));
                 }
@@ -78,6 +79,6 @@ public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
             default:
                 break;
         }
-
     }
+
 }

@@ -1,6 +1,7 @@
 package com.zamora.fastoreapp;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,11 +36,12 @@ public class ProductosListaActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private AdapterProductosCompra adapter;
     String idLista;
-    String nombreLista;
+    public static String nombreLista;
     String nombreUser;
     ListaCompras listaCompras;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     final public static ArrayList<Producto> productos  = new ArrayList<>();
+    public Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,18 +56,28 @@ public class ProductosListaActivity extends AppCompatActivity {
         //listaCompras.leer(this, nombreLista);
         //String nombre = listaCompras.getNombre();
 
-        final DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ nombreUser+"/Listas/"+nombreLista+"/Detalle");
-        refHijoUsuario.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference refHijoUsuarioP = database.getReference("Usuarios"+"/"+ nombreUser+"/Listas");
+        refHijoUsuarioP.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 productos.removeAll(productos);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Producto producto = snapshot.getValue(Producto.class);
-                    productos.add(producto);
+                    if(snapshot.getKey().equals(nombreLista)) {
+                        for (DataSnapshot hijoList : snapshot.getChildren()) {
+                            //Toast.makeText(getApplicationContext(),hijoList.getKey(),Toast.LENGTH_LONG).show();
+                            if (hijoList.getKey().equals("Detalle")) {
+                                for (DataSnapshot hijoD : hijoList.getChildren()) {
+                                    Producto producto = hijoD.getValue(Producto.class);
+                                    productos.add(producto);
+                                }
+                            }
+                        }
+                    }
                 }
+                //Toast.makeText(getApplicationContext(),"Cargando lista de productos",Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
             }
-
+//+nombreLista+"/Detalle"
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -84,12 +96,17 @@ public class ProductosListaActivity extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.productList);
         adapter = new AdapterProductosCompra(this, productos);
         lv.setAdapter(adapter);
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Producto selectedPro = (Producto) parent.getAdapter().getItem(position);
-                opcionesElemento(selectedPro,position);
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //int productoSeleccionado = productos.indexOf(parent.getAdapter().getItem(position));
+                Producto productSelected = (Producto) parent.getAdapter().getItem(position);
+                if (!productSelected.getInCart()) {
+                    productSelected.setInCart(true);
+                } else {
+                    productSelected.setInCart(false);
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -127,6 +144,7 @@ public class ProductosListaActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     /**
@@ -184,7 +202,7 @@ public class ProductosListaActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 Producto nuevoProducto = new Producto();
                                 nuevoProducto.setNombre(capText);
-
+                                nuevoProducto.setContext(context);
                                 nuevoProducto.insertar(nuevoProducto,nombreLista,nombreUser);
                                 /*if (idRetorno != -1) {
                                     Toast.makeText(getApplicationContext(), "Se insertó " + nuevoProducto.toString(), Toast.LENGTH_SHORT).show();
@@ -213,7 +231,7 @@ public class ProductosListaActivity extends AppCompatActivity {
 
         return builder.show();
     }
-    public void opcionesElemento(final Producto selectedPro, final int posicion) {
+    /*public void opcionesElemento(final Producto selectedPro, final int posicion) {
         final CharSequence[] opciones = {"Añadido al carrito", "Eliminar"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -228,7 +246,7 @@ public class ProductosListaActivity extends AppCompatActivity {
                     if (wasRemoved) {
                         DatabaseReference refEliminar = database.getReference("Usuarios/"+nombreUser+"/Listas/"+nombreLista+"/Detalle/"+selectedPro.getNombre());
                         refEliminar.removeValue();
-                        //Toast.makeText(getApplicationContext(), "Estoy removiendo del adapter, no de firebase", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Eiminando Producto", Toast.LENGTH_SHORT).show();
 
                         adapter.notifyDataSetChanged();
                     }
@@ -238,5 +256,5 @@ public class ProductosListaActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         alert.show();
-    }
+    }*/
 }

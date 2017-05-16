@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,19 +22,31 @@ public class Producto {
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-
+    private static Context cont;
     private int id;
     private String nombre;
     private Double precio;
     private String imagen;
+    private Boolean isInCart;
 
-    public Producto(){}
+    public Producto(){
+        this.isInCart = false;
+    }
 
-    public Producto(int id, String nombre, Double precio, String imagen) {
+    public Producto(int id, String nombre, Double precio, String imagen,Boolean isInCart) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
+        this.isInCart = isInCart;
+    }
+
+    public static Context getContext() {
+        return cont;
+    }
+
+    public static void setContext(Context context) {
+        Producto.cont = context;
     }
 
     public int getId() {
@@ -68,6 +81,14 @@ public class Producto {
         this.imagen = imagen;
     }
 
+    public Boolean getInCart() {
+        return isInCart;
+    }
+
+    public void setInCart(Boolean inCart) {
+        isInCart = inCart;
+    }
+
     @Override
     public String toString() {
         return "Producto{" +
@@ -80,12 +101,36 @@ public class Producto {
     /**
      * Función que inserta un producto en la base de datos
      */
-    public void insertar(Producto context,String nombreLista,String nombreU) {
+    public void insertar(final Producto context, final String nombreLista,final String nombreU) {
         //Producto nuevoProducto = new Producto(getId(),getNombre(),getPrecio(),"");
-        DatabaseReference refProducto = database.getReference("Usuarios/"+ nombreU+"/Listas/"+nombreLista+"/Detalle");
+        final DatabaseReference refProducto = database.getReference("Usuarios/"+ nombreU+"/Listas/"+nombreLista+"/Detalle");
         Map<String,Object> hijoProducto = new HashMap<String, Object>();
         hijoProducto.put(context.getNombre(),context);
         refProducto.updateChildren(hijoProducto);
+        Toast.makeText(cont,"Insertando lista de producto", Toast.LENGTH_LONG).show();
+        /*refProducto.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot hijoLista : dataSnapshot.getChildren()){
+                    if(hijoLista.getKey().equals(nombreLista)){
+                        DatabaseReference refList = database.getReference("Usuarios/"+ nombreU+"/Listas/"+nombreLista+"/Detalle");
+
+                    }
+                }
+                //DataSnapshot us = dataSnapshot.child(context.getNombre());
+                //boolean x = us.exists();
+                //if(x == false){
+
+
+                //}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
+
         /*DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = DatabaseHelper.getWritableDatabase();
 
