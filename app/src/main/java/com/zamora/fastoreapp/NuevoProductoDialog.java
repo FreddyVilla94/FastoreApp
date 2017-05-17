@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.zamora.fastoreapp.Clases.Producto;
 
@@ -17,7 +18,7 @@ import com.zamora.fastoreapp.Clases.Producto;
 public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
 
     private String nombreLista, nombreUser;
-    private EditText txtNombre, txtPrecio;
+    private EditText txtNombre, txtCantidad, txtPrecio;
     private Button btnAgregar;
     public Context context;
 
@@ -38,6 +39,7 @@ public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
         setContentView(R.layout.dialog_nuevo_producto);
 
         txtNombre = (EditText) findViewById(R.id.nombre_input);
+        txtCantidad = (EditText) findViewById(R.id.cant_input);
         txtPrecio = (EditText) findViewById(R.id.precio_input);
         btnAgregar = (Button) findViewById(R.id.btnCrear);
 
@@ -49,15 +51,30 @@ public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
         switch (v.getId()) {
 
             case R.id.btnCrear:
-                Producto nuevoProducto = new Producto();
-                nuevoProducto.setNombre(txtNombre.getText().toString());
-                nuevoProducto.setContext(context);
-                if (!txtPrecio.getText().toString().equals("")) {
-                    nuevoProducto.setPrecio(Double.parseDouble(txtPrecio.getText().toString()));
+                if(txtNombre.getText().toString().equals("")|| txtCantidad.getText().toString().equals("")){
+                    Toast.makeText(getContext(),"Datos nulos",Toast.LENGTH_SHORT).show();
                 }
-                //DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ListasCompraActivity.user[0]);
-                //refProducto.push().setValue(nuevoProducto);
-                nuevoProducto.insertar(nuevoProducto,nombreLista,nombreUser);
+                else {
+                    Producto nuevoProducto = new Producto();
+                /*String original = "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ";
+                // Cadena de caracteres ASCII que reemplazarán los originales.
+                String ascii = "AAAAAAACEEEEIIIIDNOOOOOOUUUUYBaaaaaaaceeeeiiiionoooooouuuuyy";
+                String output = txtNombre.getText().toString().toLowerCase();
+                for (int i=0; i<original.length(); i++) {
+                    // Reemplazamos los caracteres especiales.
+
+                    output = output.replace(original.charAt(i), ascii.charAt(i));
+
+                }//for i*/
+                    nuevoProducto.setNombre(txtNombre.getText().toString());
+                    nuevoProducto.setCantidad(Integer.parseInt(txtCantidad.getText().toString()));
+                    nuevoProducto.setContext(context);
+                    if (!txtPrecio.getText().toString().equals("")) {
+                        nuevoProducto.setPrecio(Double.parseDouble(txtPrecio.getText().toString()));
+                    }
+                    //DatabaseReference refHijoUsuario = database.getReference("Usuarios"+"/"+ListasCompraActivity.user[0]);
+                    //refProducto.push().setValue(nuevoProducto);
+                    nuevoProducto.insertar(nuevoProducto, nombreLista, nombreUser);
                 /*if (idRetorno != -1) {
                     Toast.makeText(context, "Se insertó " + nuevoProducto.toString(), Toast.LENGTH_SHORT).show();
                 } else {
@@ -72,9 +89,10 @@ public class NuevoProductoDialog extends Dialog implements View.OnClickListener{
                 /*ArrayList<Producto> listaProductos = listaCompras.getDetalle();
                 listaProductos.add(nuevoProducto);
                 listaCompras.setDetalle(listaProductos);*/
-
+                }
                 this.dismiss();
                 break;
+
 
             default:
                 break;

@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +36,7 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener{
     private int cantListas;
     private EditText txtFecha, txtHora, txtNombre;
     private Button btnCrearLista;
+    private CheckBox checkBoxRecordar;
     private int dd, mm, yyyy, hora, minuto;
     public Context context;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -61,6 +64,7 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener{
         txtFecha = (EditText) findViewById(R.id.fecha_input);
         txtHora = (EditText) findViewById(R.id.hora_input);
         txtNombre = (EditText) findViewById(R.id.nombre_input);
+        checkBoxRecordar = (CheckBox) findViewById(R.id.recordar_check);
         btnCrearLista = (Button) findViewById(R.id.btnCrear);
 
         txtNombre.setText("Lista de compras " + cantListas);
@@ -118,6 +122,9 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener{
                 break;
 
             case R.id.btnCrear:
+                if(checkBoxRecordar.isChecked()){
+                    Toast.makeText(getContext(),"Si",Toast.LENGTH_LONG).show();
+                }
                 ListaCompras nuevaLista = new ListaCompras();
                 nuevaLista.setId(String.format("%04d%04d", Integer.parseInt(idUsuario), cantListas));
                 nuevaLista.setNombre(txtNombre.getText().toString());

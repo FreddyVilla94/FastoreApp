@@ -23,8 +23,6 @@ import com.zamora.fastoreapp.R;
 
 import java.util.ArrayList;
 
-import static com.zamora.fastoreapp.ListasCompraActivity.user;
-
 /**
  * Created by Sergio on 13/04/2017.
  */
@@ -83,7 +81,7 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
         });
 
         if (dir.getInCart()) {
-            v.setBackgroundColor(Color.parseColor("#00FFF0"));
+            v.setBackgroundColor(Color.parseColor("#CFD8DC"));
         } else {
             v.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
@@ -133,7 +131,7 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
                     public void onClick(DialogInterface dialog, int which) {
                         filteredItems.remove(position);
                         notifyDataSetChanged();
-                        DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+ ProductosListaActivity.nombreLista+"/Detalle/"+speechText);
+                        DatabaseReference refEliminar = database.getReference("Usuarios/"+ProductosListaActivity.nombreUser+"/Listas/"+ ProductosListaActivity.nombreLista+"/Detalle/"+speechText);
                         refEliminar.removeValue();
                         Toast.makeText(activity, "Eiminando Producto", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(activity, "Me ztaz vorrando karnal", Toast.LENGTH_SHORT).show();

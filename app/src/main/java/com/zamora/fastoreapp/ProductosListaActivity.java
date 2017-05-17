@@ -26,7 +26,9 @@ import com.zamora.fastoreapp.Clases.ListaCompras;
 import com.zamora.fastoreapp.Clases.Producto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Sergio on 13/04/2017.
@@ -37,7 +39,7 @@ public class ProductosListaActivity extends AppCompatActivity {
     private AdapterProductosCompra adapter;
     String idLista;
     public static String nombreLista;
-    String nombreUser;
+    public static String nombreUser;
     ListaCompras listaCompras;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     final public static ArrayList<Producto> productos  = new ArrayList<>();
@@ -106,6 +108,10 @@ public class ProductosListaActivity extends AppCompatActivity {
                 } else {
                     productSelected.setInCart(false);
                 }
+                DatabaseReference refProductoCar = database.getReference("Usuarios/"+nombreUser+"/Listas/"+nombreLista+"/Detalle/"+productSelected.getNombre());
+                Map<String,Object> cambio = new HashMap<String, Object>();
+                cambio.put("inCart",productSelected.getInCart());
+                refProductoCar.updateChildren(cambio);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -201,6 +207,8 @@ public class ProductosListaActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Producto nuevoProducto = new Producto();
+                                //String[] parse = capText.split(" ");
+                                Toast.makeText(getApplicationContext(),capText,Toast.LENGTH_SHORT).show();
                                 nuevoProducto.setNombre(capText);
                                 nuevoProducto.setContext(context);
                                 nuevoProducto.insertar(nuevoProducto,nombreLista,nombreUser);

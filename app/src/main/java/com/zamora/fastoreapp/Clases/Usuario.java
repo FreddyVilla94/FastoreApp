@@ -1,21 +1,8 @@
 package com.zamora.fastoreapp.Clases;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.zamora.fastoreapp.Database.DatabaseContract;
-import com.zamora.fastoreapp.Database.DatabaseHelper;
 
 import java.util.ArrayList;
-
-import static com.zamora.fastoreapp.ListasCompraActivity.user;
 
 
 /**
@@ -76,7 +63,7 @@ public class Usuario {
     /**
      * Función que inserta un usuario en la base de datos
      */
-    public long insertar(Context context) {
+    /*public long insertar(Context context) {
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = DatabaseHelper.getWritableDatabase();
 
@@ -88,13 +75,13 @@ public class Usuario {
 
         // Insertar la nueva fila
         return db.insert(DatabaseContract.DataBaseEntry.TABLE_NAME_USUARIO, null, values);
-    }
+    }*/
 
 
     /**
      * Leer una persona desde la base de datos
      */
-    public void leer (Context context, String identificacion){
+    /*public void leer (Context context, String identificacion){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -135,13 +122,13 @@ public class Usuario {
         }
 
         this.setListasCompras(leerListasUsuario(context, identificacion));
-    }
+    }*/
 
 
     /**
      * Leer las listas de compras pertenecientes a un usuario
      */
-    public ArrayList<ListaCompras> leerListasUsuario (Context context, String usuario){
+   /* public ArrayList<ListaCompras> leerListasUsuario (Context context, String usuario){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -189,15 +176,15 @@ public class Usuario {
                         DatabaseContract.DataBaseEntry.COLUMN_NAME_MONTO_TOTAL)));
                 misListas.add(miLista);
             } while (cursor.moveToNext());
-        }*/
+        }
         return misListas;
-    }
+    }*/
 
 
     /**
      * Actualizar una persona en la base de datos
      */
-    public int actualizar(Context context) {
+    /*public int actualizar(Context context) {
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = DatabaseHelper.getReadableDatabase();
 
@@ -211,5 +198,5 @@ public class Usuario {
         String[] selectionArgs = {getId()};
         // Actualizar la base de datos
         return db.update(DatabaseContract.DataBaseEntry.TABLE_NAME_USUARIO, values, selection, selectionArgs);
-    }
+    }*/
 }

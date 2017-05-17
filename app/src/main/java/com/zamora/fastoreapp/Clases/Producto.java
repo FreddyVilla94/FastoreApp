@@ -1,15 +1,10 @@
 package com.zamora.fastoreapp.Clases;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.zamora.fastoreapp.Database.DatabaseContract;
-import com.zamora.fastoreapp.Database.DatabaseHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,17 +22,19 @@ public class Producto {
     private String nombre;
     private Double precio;
     private String imagen;
+    private int cantidad;
     private Boolean isInCart;
 
     public Producto(){
         this.isInCart = false;
     }
 
-    public Producto(int id, String nombre, Double precio, String imagen,Boolean isInCart) {
+    public Producto(int id, String nombre, Double precio, String imagen, int cantidad,Boolean isInCart) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
+        this.cantidad = cantidad;
         this.isInCart = isInCart;
     }
 
@@ -81,6 +78,14 @@ public class Producto {
         this.imagen = imagen;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
     public Boolean getInCart() {
         return isInCart;
     }
@@ -104,10 +109,11 @@ public class Producto {
     public void insertar(final Producto context, final String nombreLista,final String nombreU) {
         //Producto nuevoProducto = new Producto(getId(),getNombre(),getPrecio(),"");
         final DatabaseReference refProducto = database.getReference("Usuarios/"+ nombreU+"/Listas/"+nombreLista+"/Detalle");
+
         Map<String,Object> hijoProducto = new HashMap<String, Object>();
         hijoProducto.put(context.getNombre(),context);
         refProducto.updateChildren(hijoProducto);
-        Toast.makeText(cont,"Insertando lista de producto", Toast.LENGTH_LONG).show();
+        Toast.makeText(cont,"Insertando producto", Toast.LENGTH_LONG).show();
         /*refProducto.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -147,7 +153,7 @@ public class Producto {
         return db.insert(DatabaseContract.DataBaseEntry.TABLE_NAME_PRODUCTO, null, values);*/
     }
 
-
+    /*
     public long insertarDetalle(Context context, String idLista) {
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = DatabaseHelper.getWritableDatabase();
@@ -168,13 +174,13 @@ public class Producto {
         System.out.println("El id de retorno es " + idRetorno);
         return idRetorno;
 
-    }
+    }*/
 
 
     /**
      * Leer un producto desde la base de datos
      */
-    public void leer (Context context, String identificacion){
+    /*public void leer (Context context, String identificacion){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -215,13 +221,13 @@ public class Producto {
                     DatabaseContract.DataBaseEntry.COLUMN_NAME_IMAGEN)));
         }
         db.close();
-    }
+    }*/
 
 
     /**
      * Leer el último registro de la tabla producto
      */
-    public int leerUltimoProducto (Context context){
+    /*public int leerUltimoProducto (Context context){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -258,10 +264,10 @@ public class Producto {
         db.close();
         System.out.println("El id de la ultima fila de la tabla productos es " + ultimoID);
         return ultimoID;
-    }
+    }*/
 
 
-    public int leerUltimoDetalle (Context context){
+    /*public int leerUltimoDetalle (Context context){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -298,11 +304,11 @@ public class Producto {
         db.close();
         System.out.println("El id de la ultima fila de la tabla detalles es " + ultimoID);
         return ultimoID;
-    }
+    }*/
 
 
 
-    public void leerRegistrosDetalle (Context context){
+    /*public void leerRegistrosDetalle (Context context){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -336,14 +342,14 @@ public class Producto {
             } while (cursor.moveToNext());
         }
         db.close();
-    }
+    }*/
 
 
 
     /**
      * Actualizar un prodcuto en la base de datos
      */
-    public int actualizar(Context context) {
+    /*public int actualizar(Context context) {
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = DatabaseHelper.getReadableDatabase();
 
@@ -358,5 +364,5 @@ public class Producto {
         String[] selectionArgs = { String.valueOf(getId()) };
         // Actualizar la base de datos
         return db.update(DatabaseContract.DataBaseEntry.TABLE_NAME_PRODUCTO, values, selection, selectionArgs);
-    }
+    }*/
 }

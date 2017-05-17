@@ -140,10 +140,10 @@ public class ListasCompraActivity extends AppCompatActivity{
         });
     }
 
-    public void leerUsuario(String userId) {
+    /*public void leerUsuario(String userId) {
         this.usuario = new Usuario();
         this.usuario.leer(getApplicationContext(), userId);
-    }
+    }*/
 
     public void destroy(){
         //finish();
@@ -259,6 +259,8 @@ public class ListasCompraActivity extends AppCompatActivity{
                         if(pos == -1){
                             DatabaseReference refEliminar = database.getReference("Usuarios/"+user[0]+"/Listas/"+selectedList.getNombre());
                             refEliminar.removeValue();
+                            //DatabaseReference refEliminar1 = database.getReference("Usuarios/"+user[0]+"/Listas/"+selectedList.getNombre());
+                            //refEliminar1.removeValue();
                         }
                         else{
                             DatabaseReference refEliminar1 = database.getReference("Usuarios/"+user[0]+"/Listas Compartidas/"+selectedList.getIdUsuario()+"/"+selectedList.getNombre());

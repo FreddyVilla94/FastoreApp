@@ -23,7 +23,19 @@
         android:inputType="textCapSentences"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:hint="Nombre del producto"
+        android:hint="Ejm: Azúcar"
+        android:background="@drawable/edittext_background">
+    </EditText>
+
+    <EditText
+        android:id="@+id/cant_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_between"
+        android:inputType="number"
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="Ejm: 5"
         android:background="@drawable/edittext_background">
     </EditText>
 
@@ -35,7 +47,7 @@
         android:inputType="numberDecimal"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:hint="Precio (Opcional)"
+        android:hint="Ejm: 2.300 (Opcional)"
         android:background="@drawable/edittext_background">
     </EditText>
 

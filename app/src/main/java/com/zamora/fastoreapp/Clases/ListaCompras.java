@@ -1,16 +1,10 @@
 package com.zamora.fastoreapp.Clases;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.zamora.fastoreapp.Database.DatabaseContract;
-import com.zamora.fastoreapp.Database.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,7 +166,7 @@ public class ListaCompras {
     /**
      * Leer una lista de compras desde la base de datos
      */
-    public void leer (Context context, String identificacion){
+    /*public void leer (Context context, String identificacion){
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
 
         // Obtiene la base de datos en modo lectura
@@ -217,13 +211,13 @@ public class ListaCompras {
         }
         this.setDetalle(leerProductosCompra(context, identificacion));
         db.close();
-    }
+    }*/
 
 
     /**
      * Leer los productos grabados en cada lista del usuario
      */
-    public ArrayList<Producto> leerProductosCompra (Context context, final String listaID){
+    /*public ArrayList<Producto> leerProductosCompra (Context context, final String listaID){
         final DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         //Create new querybuilder
         SQLiteQueryBuilder _QB = new SQLiteQueryBuilder();
@@ -269,15 +263,15 @@ public class ListaCompras {
                 misProductos.add(miProducto);
             } while (cursor.moveToNext());
         }
-        db.close();*/
+        db.close();
         return misProductos;
-    }
+    }*/
 
 
     /**
      * Actualizar una lista de compras en la base de datos
      */
-    public int actualizar(Context context) {
+    /*public int actualizar(Context context) {
         DatabaseHelper DatabaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = DatabaseHelper.getReadableDatabase();
 
@@ -293,5 +287,5 @@ public class ListaCompras {
         String[] selectionArgs = {getId()};
         // Actualizar la base de datos
         return db.update(DatabaseContract.DataBaseEntry.TABLE_NAME_LISTA_COMPRA, values, selection, selectionArgs);
-    }
+    }*/
 }
