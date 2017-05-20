@@ -29,9 +29,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String name;
-    private static String email;
-    private static String imgUrl;
+    private String name;
+    private String email;
+    private String imgUrl;
+    private String id;
     private SignInButton signInButton;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     email = user.getEmail();
                     Uri photo = user.getPhotoUrl();
                     imgUrl = photo.toString();
+                    id = user.getUid();
                     //Toast.makeText(getApplicationContext(),name+" "+email+" "+imgUrl,Toast.LENGTH_LONG).show();
 
                 } else {
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         name  ="";
                         email ="";
                         imgUrl ="";
+                        id = "";
                     }
                 });
     }
@@ -160,15 +163,17 @@ public class MainActivity extends AppCompatActivity {
                 // signed in user can be handled in the listener.
                 if (!task.isSuccessful()) {
                     Log.w(TAG, "signInWithCredential", task.getException());
-                    Toast.makeText(MainActivity.this, "Authentication failed.",
+                    Toast.makeText(MainActivity.this, "La autentificación fallo, por favor verifique su conexión a Internet",
                             Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Intent listasCompra = new Intent(MainActivity.this, ListasCompraActivity.class);
-                    listasCompra.putExtra("nombre",name);
-                    listasCompra.putExtra("email",email);
-                    listasCompra.putExtra("image",imgUrl);
-                    startActivity(listasCompra);
+                    Intent intent = new Intent(MainActivity.this, ListasCompraActivity.class);
+                    intent.putExtra("nombre",name);
+                    intent.putExtra("email",email);
+                    intent.putExtra("image",imgUrl);
+                    intent.putExtra("id", id);
+                    System.out.println("El id por enviar es: " + id);
+                    startActivity(intent);
                     //finish();
                 }
             }

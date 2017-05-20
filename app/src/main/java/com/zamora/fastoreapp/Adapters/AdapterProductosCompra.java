@@ -23,6 +23,8 @@ import com.zamora.fastoreapp.R;
 
 import java.util.ArrayList;
 
+import static com.zamora.fastoreapp.R.id.deleteIco;
+
 /**
  * Created by Sergio on 13/04/2017.
  */
@@ -69,8 +71,14 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
 
         final Producto dir = filteredItems.get(position);
 
+        TextView lblCantidad = (TextView) v.findViewById(R.id.lblCantidad);
+        lblCantidad.setText(String.valueOf(dir.getCantidad()));
+
         final TextView nombre = (TextView) v.findViewById(R.id.productName);
         nombre.setText(dir.getNombre());
+
+        TextView lblPrecio = (TextView) v.findViewById(R.id.lblPrecio);
+        lblPrecio.setText(String.valueOf(dir.getPrecio()));
 
         ImageView deleteIco = (ImageView) v.findViewById(R.id.deleteIco);
         deleteIco.setOnClickListener(new View.OnClickListener() {

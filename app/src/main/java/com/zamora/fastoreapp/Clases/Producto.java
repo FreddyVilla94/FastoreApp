@@ -1,7 +1,6 @@
 package com.zamora.fastoreapp.Clases;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -113,7 +112,7 @@ public class Producto {
         Map<String,Object> hijoProducto = new HashMap<String, Object>();
         hijoProducto.put(context.getNombre(),context);
         refProducto.updateChildren(hijoProducto);
-        Toast.makeText(cont,"Insertando producto", Toast.LENGTH_LONG).show();
+        //Toast.makeText(cont,"Insertando producto", Toast.LENGTH_LONG).show();
         /*refProducto.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

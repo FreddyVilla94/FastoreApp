@@ -13,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -123,15 +122,16 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener{
 
             case R.id.btnCrear:
                 if(checkBoxRecordar.isChecked()){
-                    Toast.makeText(getContext(),"Si",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(),"Si",Toast.LENGTH_LONG).show();
                 }
                 ListaCompras nuevaLista = new ListaCompras();
-                nuevaLista.setId(String.format("%04d%04d", Integer.parseInt(idUsuario), cantListas));
+                //nuevaLista.setId(String.format("%04d%04d", Integer.parseInt(idUsuario), cantListas));
+                nuevaLista.setId("21435");
                 nuevaLista.setNombre(txtNombre.getText().toString());
-                nuevaLista.setIdUsuario(ListasCompraActivity.user[0]);
+                nuevaLista.setIdUsuario(idUsuario);
                 nuevaLista.setFechaCompra(txtFecha.getText().toString());
                 nuevaLista.setContext(context);
-                nuevaLista.insertar(nuevaLista);
+                nuevaLista.insertar(idUsuario);
                 Intent intent = new Intent(context, ProductosListaActivity.class);
                 intent.putExtra("idLista", nuevaLista.getId());
                 intent.putExtra("nombreLista",nuevaLista.getNombre());

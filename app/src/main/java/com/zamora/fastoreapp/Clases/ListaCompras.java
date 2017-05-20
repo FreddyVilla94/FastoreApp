@@ -1,7 +1,6 @@
 package com.zamora.fastoreapp.Clases;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.zamora.fastoreapp.ListasCompraActivity.user;
+//import static com.zamora.fastoreapp.ListasCompraActivity.user;
 
 /**
  * Created by Zamora on 29/03/2017.
@@ -123,12 +122,12 @@ public class ListaCompras {
     /**
      * Función que inserta una lista de compras en la base de datos
      */
-    public void insertar(final ListaCompras lista) {
-        final DatabaseReference refHijoUsuarioL = database.getReference("Usuarios"+"/"+ user[0]+"/Listas");
+    public void insertar(String idUsuario) {
+        final DatabaseReference refHijoUsuarioL = database.getReference("Usuarios"+"/"+ idUsuario+"/Listas");
         Map<String,Object> hijoLista = new HashMap<String,Object>();
-        hijoLista.put(lista.getNombre(),lista);
+        hijoLista.put(getNombre(), this);
         refHijoUsuarioL.updateChildren(hijoLista);
-        Toast.makeText(context,"Insertando lista de compras",Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,"Insertando lista de compras",Toast.LENGTH_LONG).show();
         /*refHijoUsuarioL.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

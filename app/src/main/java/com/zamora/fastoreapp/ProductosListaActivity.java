@@ -36,8 +36,10 @@ import java.util.Map;
 
 public class ProductosListaActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public final static ArrayList<Producto> listaProductosGlobales = new ArrayList<>();
     private AdapterProductosCompra adapter;
     String idLista;
+    public static String txtSpeechInput;
     public static String nombreLista;
     public static String nombreUser;
     ListaCompras listaCompras;
@@ -80,6 +82,25 @@ public class ProductosListaActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
 //+nombreLista+"/Detalle"
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        final DatabaseReference refProductos = database.getReference("Productos");
+        refProductos.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listaProductosGlobales.removeAll(listaProductosGlobales);
+                for (DataSnapshot datosProd : dataSnapshot.getChildren()){
+                    //Toast.makeText(getApplicationContext(),)
+                    Producto producto = datosProd.getValue(Producto.class);
+                    producto.setNombre(datosProd.getKey());
+                    listaProductosGlobales.add(producto);
+                }
+                //Toast.makeText(getApplicationContext(),listaProductosGlobales.toString(),Toast.LENGTH_LONG).show();
+            }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -185,9 +206,10 @@ public class ProductosListaActivity extends AppCompatActivity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    //txtSpeechInput.setText(result.get(0));
+                    txtSpeechInput = result.get(0);
+                    String[] parse = txtSpeechInput.split(" ");
                     //Toast.makeText(this, result.get(0), Toast.LENGTH_LONG).show();
-                    confirmSpeechText(result.get(0));
+                    confirmSpeechText(result.get(0),parse);
                 }
                 break;
             }
@@ -196,10 +218,9 @@ public class ProductosListaActivity extends AppCompatActivity {
     }
 
 
-    public AlertDialog confirmSpeechText(final String speechText) {
+    public AlertDialog confirmSpeechText(final String speechText,final String[] parse) {
         final String capText = speechText.substring(0, 1).toUpperCase() + speechText.substring(1);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setTitle("Agregar")
                 .setMessage(capText)
                 .setPositiveButton("Sí",
@@ -207,23 +228,53 @@ public class ProductosListaActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Producto nuevoProducto = new Producto();
-                                //String[] parse = capText.split(" ");
-                                Toast.makeText(getApplicationContext(),capText,Toast.LENGTH_SHORT).show();
                                 nuevoProducto.setNombre(capText);
-                                nuevoProducto.setContext(context);
+                                nuevoProducto.setContext(getApplicationContext());
+                                ArrayList<String> numerosN = new ArrayList<String>();
+                                ArrayList<String> numerosL = new ArrayList<String>();
+                                numerosL.add("uno");numerosL.add("dos");numerosL.add("tres");
+                                numerosL.add("cuatro");numerosL.add("cinco");numerosL.add("seis");
+                                numerosL.add("siete");numerosL.add("ocho");numerosL.add("nueve");
+                                numerosL.add("dies");numerosL.add("once");numerosL.add("doce");
+                                numerosL.add("trece");numerosL.add("catorce");numerosL.add("quince");
+                                for(int i = 0; i< 51;i++){
+                                    numerosN.add(String.valueOf(i));
+                                }
+                                if(parse.length == 1){
+                                    nuevoProducto.setCantidad(1);
+                                    for (int p = 0; p < listaProductosGlobales.size(); p++) {
+                                        if (parse[0].equals(listaProductosGlobales.get(p).getNombre().toLowerCase())) {
+                                            //Toast.makeText(getApplicationContext(), parse[0], Toast.LENGTH_SHORT).show();
+                                            nuevoProducto.setNombre(listaProductosGlobales.get(p).getNombre());
+                                            nuevoProducto.setPrecio(listaProductosGlobales.get(p).getPrecio());
+                                        }
+                                    }
+                                }
+                                else {
+                                    for (int i = 0; i < parse.length; i++) {
+                                        //Toast.makeText(getApplicationContext(),parse[i],Toast.LENGTH_SHORT).show();
+                                        for (int n = 0; n < numerosN.size(); n++) {
+                                            if (parse[i].equals(numerosN.get(n))) {
+                                                //Toast.makeText(getApplicationContext(), parse[i], Toast.LENGTH_SHORT).show();
+                                                nuevoProducto.setCantidad(n);
+                                            }
+                                        }
+                                        for (int nL = 1; nL < numerosL.size(); nL++) {
+                                            if (parse[i].equals(numerosL.get(nL))) {
+                                                //Toast.makeText(getApplicationContext(), parse[i], Toast.LENGTH_SHORT).show();
+                                                nuevoProducto.setCantidad(nL);
+                                            }
+                                        }
+                                        for (int p = 0; p < listaProductosGlobales.size(); p++) {
+                                            if (parse[i].equals(listaProductosGlobales.get(p).getNombre().toLowerCase())) {
+                                                //Toast.makeText(getApplicationContext(), parse[i], Toast.LENGTH_SHORT).show();
+                                                nuevoProducto.setNombre(listaProductosGlobales.get(p).getNombre());
+                                                nuevoProducto.setPrecio(listaProductosGlobales.get(p).getPrecio());
+                                            }
+                                        }
+                                    }
+                                }
                                 nuevoProducto.insertar(nuevoProducto,nombreLista,nombreUser);
-                                /*if (idRetorno != -1) {
-                                    Toast.makeText(getApplicationContext(), "Se insertó " + nuevoProducto.toString(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Error al insertar el producto", Toast.LENGTH_SHORT).show();
-                                }
-                                idRetorno = nuevoProducto.insertarDetalle(getApplicationContext(), idLista);
-                                if (idRetorno != -1) {
-                                    Toast.makeText(getApplicationContext(), "Se insertó el detalle relacionado", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Error al insertar el detalle", Toast.LENGTH_SHORT).show();
-                                }
-                                //new Producto().leerRegistrosDetalle(this);*/
                                 onRestart();
                             }
                         })
