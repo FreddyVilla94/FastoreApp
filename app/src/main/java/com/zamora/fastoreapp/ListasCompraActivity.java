@@ -1,8 +1,12 @@
 package com.zamora.fastoreapp;
 
+import android.*;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -44,6 +48,8 @@ public class ListasCompraActivity extends AppCompatActivity{
     private String email;
     private String imagen;
     private String idUsuario;
+
+    private final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 0;
 
     public static String[] user;
     //String nombreUsuario = "fevig1994";
@@ -228,8 +234,22 @@ public class ListasCompraActivity extends AppCompatActivity{
                 //nuevaLista.putExtra("cantListas", arregloListasCompra.size()+1);
                 //startActivity(nuevaLista);
 
-                NuevaListaDialog nla = new NuevaListaDialog(ListasCompraActivity.this, idUsuario, arregloListasCompra.size()+1);
-                nla.show();
+                if (ContextCompat.checkSelfPermission(this,
+                        android.Manifest.permission.WRITE_CALENDAR)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{android.Manifest.permission.WRITE_CALENDAR},
+                            MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
+                }
+                else {
+                    String ultimoIDLista = arregloListasCompra.get(arregloListasCompra.size() - 1).getId();
+                    String substring = ultimoIDLista.substring(Math.max(ultimoIDLista.length() - 4, 0));
+                    int ultimo = Integer.parseInt(substring);
+                    NuevaListaDialog nla = new NuevaListaDialog(ListasCompraActivity.this, idUsuario, ultimo);
+                    nla.show();
+                }
+
                 return true;
             case R.id.itemProfile:
                 DialogProfile dpf = new DialogProfile(ListasCompraActivity.this,nombre,email,imagen);
@@ -332,5 +352,33 @@ public class ListasCompraActivity extends AppCompatActivity{
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_CALENDAR: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    String ultimoIDLista = arregloListasCompra.get(arregloListasCompra.size()-1).getId();
+                    String substring = ultimoIDLista.substring(Math.max(ultimoIDLista.length() - 4, 0));
+                    int ultimo = Integer.parseInt(substring);
+                    NuevaListaDialog nla = new NuevaListaDialog(ListasCompraActivity.this, idUsuario, ultimo);
+                    nla.show();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }*/
 
 }

@@ -32,10 +32,20 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/switch_height"
         android:text="NOTIFICACIONES"
+        android:gravity="center"
         android:layout_below="@+id/divider"
         android:id="@+id/lblNotificaciones"/>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/switch_height"
+        android:id="@+id/switchNotification"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/lblNotificaciones"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider"/>
 
     <EditText
         android:id="@+id/fecha_input"
@@ -49,6 +59,7 @@
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:focusable="false"
+        android:enabled="false"
         android:background="@drawable/edittext_background" />
 
     <!--<Button
@@ -73,16 +84,17 @@
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:focusable="false"
+        android:enabled="false"
         android:background="@drawable/edittext_background" />
 
-    <CheckBox
+    <!--<CheckBox
         android:id="@+id/recordar_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/hora_input"
         android:layout_below="@+id/hora_input"
         android:checked="false"
-        android:text="Recordar" />
+        android:text="Recordar" />-->
 
     <Button
         android:id="@+id/btnCrear"
@@ -93,6 +105,7 @@
         android:paddingBottom="@dimen/padding_between"
         android:paddingTop="@dimen/padding_between"
         android:text="Crear"
+        android:background="@color/colorPrimaryDark"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>
