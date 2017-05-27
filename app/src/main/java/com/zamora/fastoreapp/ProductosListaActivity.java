@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +32,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.zamora.fastoreapp.R.id.lblTotal;
+
 /**
  * Created by Sergio on 13/04/2017.
  */
@@ -42,10 +46,12 @@ public class ProductosListaActivity extends AppCompatActivity {
     public static String txtSpeechInput;
     public static String nombreLista;
     public static String nombreUser;
-    ListaCompras listaCompras;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     final public static ArrayList<Producto> productos  = new ArrayList<>();
     public Context context;
+
+    private double total = 0;
+    private TextView lblTotal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,9 @@ public class ProductosListaActivity extends AppCompatActivity {
         idLista = intent.getStringExtra("idLista");
         nombreLista = intent.getStringExtra("nombreLista");
         nombreUser = intent.getStringExtra("idUsuario");
+
+        lblTotal = (TextView) findViewById(R.id.lblTotal);
+        getSupportActionBar().setTitle(nombreLista);
         //listaCompras = new ListaCompras();
         //listaCompras.leer(this, nombreLista);
         //String nombre = listaCompras.getNombre();
@@ -64,7 +73,7 @@ public class ProductosListaActivity extends AppCompatActivity {
         refHijoUsuarioP.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                productos.removeAll(productos);
+                productos.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot.getKey().equals(nombreLista)) {
                         for (DataSnapshot hijoList : snapshot.getChildren()) {
@@ -72,6 +81,14 @@ public class ProductosListaActivity extends AppCompatActivity {
                             if (hijoList.getKey().equals("Detalle")) {
                                 for (DataSnapshot hijoD : hijoList.getChildren()) {
                                     Producto producto = hijoD.getValue(Producto.class);
+                                    //System.out.println("cjsnsjfnsf: " + producto.getCantidad());
+                                    double cantidadProducto = producto.getCantidad();
+                                    //System.out.println("cjsnsjfnsf: " + producto.getPrecio());
+                                    double precioProducto = producto.getPrecio();
+                                    double totalProducto = cantidadProducto * precioProducto;
+                                    System.out.println(cantidadProducto + " * " + precioProducto + " = " + totalProducto);
+                                    System.out.println(total + " + " + totalProducto + " = " + (total+totalProducto));
+                                    total += totalProducto;
                                     productos.add(producto);
                                 }
                             }
@@ -80,6 +97,8 @@ public class ProductosListaActivity extends AppCompatActivity {
                 }
                 //Toast.makeText(getApplicationContext(),"Cargando lista de productos",Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
+                lblTotal.setText(String.valueOf(total));
+                total = 0;
             }
 //+nombreLista+"/Detalle"
             @Override
@@ -87,11 +106,13 @@ public class ProductosListaActivity extends AppCompatActivity {
 
             }
         });
+
+
         final DatabaseReference refProductos = database.getReference("Productos");
         refProductos.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                listaProductosGlobales.removeAll(listaProductosGlobales);
+                listaProductosGlobales.clear();
                 for (DataSnapshot datosProd : dataSnapshot.getChildren()){
                     //Toast.makeText(getApplicationContext(),)
                     Producto producto = datosProd.getValue(Producto.class);
@@ -109,7 +130,6 @@ public class ProductosListaActivity extends AppCompatActivity {
 
         //productos = listaCompras.getDetalle();
         cargarListas();
-        getSupportActionBar().setTitle(nombreLista);
     }
 
     public void cargarListas(){
@@ -142,6 +162,22 @@ public class ProductosListaActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_productos_lista, menu);
+        MenuItem item = menu.findItem(R.id.itemSearch);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setQueryHint("Buscar...");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -316,4 +352,5 @@ public class ProductosListaActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }*/
+
 }

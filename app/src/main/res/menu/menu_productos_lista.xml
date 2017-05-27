@@ -6,7 +6,7 @@
         android:title="Agregar"
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="always" >
     </item>
 
     <item
@@ -14,7 +14,7 @@
         android:title="Agregar por voz"
         android:icon="@drawable/perm_group_microphone"
         android:orderInCategory="2"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="always" >
     </item>
 
     <item
@@ -23,7 +23,7 @@
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="3"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="always" >
     </item>
 
 </menu>
