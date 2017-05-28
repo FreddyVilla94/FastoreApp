@@ -79,8 +79,7 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener, Co
         switchNotificaciones = (Switch) findViewById(R.id.switchNotification);
         btnCrearLista = (Button) findViewById(R.id.btnCrear);
 
-        txtNombre.setText("Lista de compras " + cantListas);
-
+        txtNombre.setText("Lista de compras " + (cantListas + 1));
         txtFecha.setOnClickListener(this);
         txtHora.setOnClickListener(this);
         btnCrearLista.setOnClickListener(this);

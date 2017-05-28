@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -269,7 +270,7 @@ public class ListasCompraActivity extends AppCompatActivity{
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Opciones");
+        builder.setTitle(Html.fromHtml("<font color='#263238'>Opciones</font>"));
         builder.setItems(opciones, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 if(item == 0){
@@ -309,7 +310,7 @@ public class ListasCompraActivity extends AppCompatActivity{
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText correo = new EditText(this);
         correo.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        builder.setTitle("Compartir Lista Compras");
+        builder.setTitle(Html.fromHtml("<font color='#263238'>Compartir lista con...</font>"));
         builder.setView(correo);
         builder.setPositiveButton("Compartir", new DialogInterface.OnClickListener() {
             @Override

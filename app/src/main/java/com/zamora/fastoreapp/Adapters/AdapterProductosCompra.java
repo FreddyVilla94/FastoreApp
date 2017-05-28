@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.zamora.fastoreapp.Clases.Producto;
 import com.zamora.fastoreapp.ProductosListaActivity;
 import com.zamora.fastoreapp.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import static com.zamora.fastoreapp.R.id.deleteIco;
@@ -31,11 +33,11 @@ import static com.zamora.fastoreapp.R.id.deleteIco;
 
 public class AdapterProductosCompra extends BaseAdapter implements Filterable {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    protected Activity activity;
+    private Activity activity;
     private static LayoutInflater inflater = null;
 
-    protected ArrayList<Producto> originalItems;
-    protected ArrayList<Producto> filteredItems;
+    private ArrayList<Producto> originalItems;
+    private ArrayList<Producto> filteredItems;
 
     public AdapterProductosCompra(Activity activity, ArrayList<Producto> items) {
         this.activity = activity;
@@ -78,7 +80,14 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
         nombre.setText(dir.getNombre());
 
         TextView lblPrecio = (TextView) v.findViewById(R.id.lblPrecio);
-        lblPrecio.setText(String.valueOf(dir.getPrecio()));
+        System.out.println(dir.getPrecio());
+        if (dir.getPrecio() != null) {
+            NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+            lblPrecio.setText(numberFormat.format(dir.getPrecio()));
+        }
+        else {
+            lblPrecio.setText("-");
+        }
 
         ImageView deleteIco = (ImageView) v.findViewById(R.id.deleteIco);
         deleteIco.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +100,7 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
         if (dir.getInCart()) {
             v.setBackgroundColor(Color.parseColor("#CFD8DC"));
         } else {
-            v.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            v.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
         }
         v.setPadding(25,25,25,25);
         return v;
@@ -132,7 +141,8 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
     }
     public AlertDialog confirmDelete(final String speechText, final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Eliminar")
+
+        builder.setTitle(Html.fromHtml("<font color='#263238'>Eliminar</font>"))
                 .setMessage(speechText)
                 .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
@@ -141,8 +151,7 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
                         notifyDataSetChanged();
                         DatabaseReference refEliminar = database.getReference("Usuarios/"+ProductosListaActivity.nombreUser+"/Listas/"+ ProductosListaActivity.nombreLista+"/Detalle/"+speechText);
                         refEliminar.removeValue();
-                        Toast.makeText(activity, "Eiminando Producto", Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(activity, "Me ztaz vorrando karnal", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity, "Eiminando Producto", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

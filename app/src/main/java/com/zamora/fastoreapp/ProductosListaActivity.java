@@ -9,6 +9,8 @@ import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.text.Html;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,18 +29,18 @@ import com.zamora.fastoreapp.Adapters.AdapterProductosCompra;
 import com.zamora.fastoreapp.Clases.ListaCompras;
 import com.zamora.fastoreapp.Clases.Producto;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import static com.zamora.fastoreapp.R.id.lblTotal;
 
 /**
  * Created by Sergio on 13/04/2017.
  */
 
-public class ProductosListaActivity extends AppCompatActivity {
+public class ProductosListaActivity extends AppCompatActivity implements UpdateListInterface {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     public final static ArrayList<Producto> listaProductosGlobales = new ArrayList<>();
     private AdapterProductosCompra adapter;
@@ -47,11 +49,13 @@ public class ProductosListaActivity extends AppCompatActivity {
     public static String nombreLista;
     public static String nombreUser;
     private final int REQ_CODE_SPEECH_INPUT = 100;
-    final public static ArrayList<Producto> productos  = new ArrayList<>();
+    private ArrayList<Producto> productos  = new ArrayList<>();
     public Context context;
 
     private double total = 0;
-    private TextView lblTotal;
+
+    private TextView lblTotal, lblLista, lblCarrito;
+    private View lytDescripciones, divider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,78 +68,26 @@ public class ProductosListaActivity extends AppCompatActivity {
         nombreUser = intent.getStringExtra("idUsuario");
 
         lblTotal = (TextView) findViewById(R.id.lblTotal);
+        lblLista = (TextView) findViewById(R.id.lblLista);
+        lblCarrito = (TextView) findViewById(R.id.lblCarrito);
+        lytDescripciones = findViewById(R.id.lytDescripciones);
+        divider = findViewById(R.id.divider);
         getSupportActionBar().setTitle(nombreLista);
         //listaCompras = new ListaCompras();
         //listaCompras.leer(this, nombreLista);
         //String nombre = listaCompras.getNombre();
 
-        final DatabaseReference refHijoUsuarioP = database.getReference("Usuarios"+"/"+ nombreUser+"/Listas");
-        refHijoUsuarioP.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                productos.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(snapshot.getKey().equals(nombreLista)) {
-                        for (DataSnapshot hijoList : snapshot.getChildren()) {
-                            //Toast.makeText(getApplicationContext(),hijoList.getKey(),Toast.LENGTH_LONG).show();
-                            if (hijoList.getKey().equals("Detalle")) {
-                                for (DataSnapshot hijoD : hijoList.getChildren()) {
-                                    Producto producto = hijoD.getValue(Producto.class);
-                                    //System.out.println("cjsnsjfnsf: " + producto.getCantidad());
-                                    double cantidadProducto = producto.getCantidad();
-                                    //System.out.println("cjsnsjfnsf: " + producto.getPrecio());
-                                    double precioProducto = producto.getPrecio();
-                                    double totalProducto = cantidadProducto * precioProducto;
-                                    System.out.println(cantidadProducto + " * " + precioProducto + " = " + totalProducto);
-                                    System.out.println(total + " + " + totalProducto + " = " + (total+totalProducto));
-                                    total += totalProducto;
-                                    productos.add(producto);
-                                }
-                            }
-                        }
-                    }
-                }
-                //Toast.makeText(getApplicationContext(),"Cargando lista de productos",Toast.LENGTH_LONG).show();
-                adapter.notifyDataSetChanged();
-                lblTotal.setText(String.valueOf(total));
-                total = 0;
-            }
-//+nombreLista+"/Detalle"
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+        consultarProductos(this);
+        System.out.println("Tamaño de lista: " + productos.size());
 
 
-        final DatabaseReference refProductos = database.getReference("Productos");
-        refProductos.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                listaProductosGlobales.clear();
-                for (DataSnapshot datosProd : dataSnapshot.getChildren()){
-                    //Toast.makeText(getApplicationContext(),)
-                    Producto producto = datosProd.getValue(Producto.class);
-                    producto.setNombre(datosProd.getKey());
-                    listaProductosGlobales.add(producto);
-                }
-                //Toast.makeText(getApplicationContext(),listaProductosGlobales.toString(),Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        //productos = listaCompras.getDetalle();
         cargarListas();
     }
 
-    public void cargarListas(){
-        /*for (int i = 0; i < productos.size(); i++) {
-            System.out.println(productos.get(i).toString());
-        }*/
+
+
+    public void cargarListas() {
         ListView lv = (ListView) findViewById(R.id.productList);
         adapter = new AdapterProductosCompra(this, productos);
         lv.setAdapter(adapter);
@@ -149,11 +101,12 @@ public class ProductosListaActivity extends AppCompatActivity {
                 } else {
                     productSelected.setInCart(false);
                 }
+                adapter.notifyDataSetChanged();
+
                 DatabaseReference refProductoCar = database.getReference("Usuarios/"+nombreUser+"/Listas/"+nombreLista+"/Detalle/"+productSelected.getNombre());
                 Map<String,Object> cambio = new HashMap<String, Object>();
                 cambio.put("inCart",productSelected.getInCart());
                 refProductoCar.updateChildren(cambio);
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -257,7 +210,7 @@ public class ProductosListaActivity extends AppCompatActivity {
     public AlertDialog confirmSpeechText(final String speechText,final String[] parse) {
         final String capText = speechText.substring(0, 1).toUpperCase() + speechText.substring(1);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Agregar")
+        builder.setTitle(Html.fromHtml("<font color='#263238'>Agregar</font>"))
                 .setMessage(capText)
                 .setPositiveButton("Sí",
                         new DialogInterface.OnClickListener() {
@@ -271,7 +224,7 @@ public class ProductosListaActivity extends AppCompatActivity {
                                 numerosL.add("uno");numerosL.add("dos");numerosL.add("tres");
                                 numerosL.add("cuatro");numerosL.add("cinco");numerosL.add("seis");
                                 numerosL.add("siete");numerosL.add("ocho");numerosL.add("nueve");
-                                numerosL.add("dies");numerosL.add("once");numerosL.add("doce");
+                                numerosL.add("diez");numerosL.add("once");numerosL.add("doce");
                                 numerosL.add("trece");numerosL.add("catorce");numerosL.add("quince");
                                 for(int i = 0; i< 51;i++){
                                     numerosN.add(String.valueOf(i));
@@ -353,4 +306,100 @@ public class ProductosListaActivity extends AppCompatActivity {
         alert.show();
     }*/
 
+
+    public void consultarProductos(final UpdateListInterface updateListInterface) {
+        final DatabaseReference refHijoUsuarioP = database.getReference("Usuarios"+"/"+ nombreUser+"/Listas");
+        final ArrayList<Producto> productoArrayList = new ArrayList<>();
+        refHijoUsuarioP.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                productoArrayList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.getKey().equals(nombreLista)) {
+                        for (DataSnapshot hijoList : snapshot.getChildren()) {
+                            //Toast.makeText(getApplicationContext(),hijoList.getKey(),Toast.LENGTH_LONG).show();
+                            if (hijoList.getKey().equals("Detalle")) {
+                                for (DataSnapshot hijoD : hijoList.getChildren()) {
+                                    Producto producto = hijoD.getValue(Producto.class);
+                                    productoArrayList.add(producto);
+                                }
+                            }
+                        }
+                    }
+                }
+                updateListInterface.updateList(productoArrayList);
+                //Toast.makeText(getApplicationContext(),"Cargando lista de productos",Toast.LENGTH_LONG).show();
+
+                NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+                lblTotal.setText("Total: " + numberFormat.format(total));
+                total = 0;
+                if (productoArrayList.size() > 0) {
+                    lytDescripciones.setVisibility(View.VISIBLE);
+                    divider.setVisibility(View.VISIBLE);
+                }
+            }
+            //+nombreLista+"/Detalle"
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference refProductos = database.getReference("Productos");
+        refProductos.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listaProductosGlobales.clear();
+                for (DataSnapshot datosProd : dataSnapshot.getChildren()){
+                    //Toast.makeText(getApplicationContext(),)
+                    Producto producto = datosProd.getValue(Producto.class);
+                    producto.setNombre(datosProd.getKey());
+                    listaProductosGlobales.add(producto);
+                }
+                //Toast.makeText(getApplicationContext(),listaProductosGlobales.toString(),Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void updateList(List<Producto> productoList) {
+        productos.clear();
+        productos.addAll(productoList);
+        int contadorPendientes = productos.size();
+        int contadorCarrito = 0;
+        for (int i = 0; i < productos.size(); i++) {
+            double cantidadProducto = productos.get(i).getCantidad();
+            double precioProducto;
+            try {
+                precioProducto = productos.get(i).getPrecio();
+            } catch (NullPointerException ex) {
+                continue;
+            }
+
+            double totalProducto = cantidadProducto * precioProducto;
+            total += totalProducto;
+
+            if (productos.get(i).getInCart()) {
+                contadorCarrito++;
+                contadorPendientes--;
+            }
+
+        }
+
+        lblCarrito.setText("En carrito (" + contadorCarrito + ")");
+        lblLista.setText("En lista (" + contadorPendientes + ")");
+        adapter.notifyDataSetChanged();
+    }
+
+
+
+}
+
+interface UpdateListInterface{
+    void updateList(List<Producto> productoList);
 }

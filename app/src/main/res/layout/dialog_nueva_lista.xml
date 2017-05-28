@@ -8,17 +8,24 @@
     android:paddingLeft="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_vertical_margin">
 
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
     <EditText
         android:id="@+id/nombre_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/padding_between"
         android:layout_marginTop="@dimen/padding_between"
-        android:ems="10"
         android:inputType="textCapSentences"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:selectAllOnFocus="true"
+        android:nextFocusUp="@id/nombre_input"
+        android:nextFocusLeft="@id/nombre_input"
         android:background="@drawable/edittext_background" />
 
     <View
@@ -34,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/switch_height"
         android:text="NOTIFICACIONES"
+        android:textColor="@color/colorAccent"
         android:gravity="center"
         android:layout_below="@+id/divider"
         android:id="@+id/lblNotificaciones"/>
@@ -105,7 +113,6 @@
         android:paddingBottom="@dimen/padding_between"
         android:paddingTop="@dimen/padding_between"
         android:text="Crear"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@android:color/white" />
+        android:background="@color/colorAccent"/>
 
 </RelativeLayout>

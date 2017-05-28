@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.75"
+        android:gravity="end"
         android:id="@+id/lblCantidad"
         android:text="##"
         android:textSize="20sp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -22,12 +29,12 @@
         android:layout_below="@+id/fechaLista"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:id="@+id/lblPrecio"
         android:text="1500"
-        android:gravity="right"
+        android:gravity="end"
         android:textSize="20sp"/>
 
     <!--<CheckBox
@@ -39,13 +46,22 @@
         android:layout_centerVertical="true"
         />-->
 
-    <ImageView
-        android:id="@+id/deleteIco"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@android:drawable/ic_menu_delete"
-        android:layout_gravity="end|center_vertical"
-        android:contentDescription="Eliminar producto" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:gravity="end"
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/deleteIco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_gravity="end|center_vertical"
+            android:contentDescription="Eliminar producto" />
+
+    </LinearLayout>
+
+
+</TableRow>

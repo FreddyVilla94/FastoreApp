@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,13 +11,45 @@
         android:paddingTop="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin">
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:id="@+id/lytCarrito">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:text="Monto total"/>
+            android:id="@+id/lblLista"
+            android:text="En lista:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:id="@+id/lblCarrito"
+            android:text="En carrito:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="end"
+            android:id="@+id/lblTotal"
+            android:text="Total: "/>
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:id="@+id/lytMontoTotal"
+        android:visibility="invisible">
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,13 +59,14 @@
             android:gravity="end"
             android:text="#####"/>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#C8C9CB" />
+        android:layout_height="2dp"
+        android:background="@color/colorWhite"
+        android:visibility="invisible"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +75,9 @@
         android:paddingTop="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin">
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:id="@+id/lytDescripciones"
+        android:visibility="invisible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,13 +98,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:id="@+id/lblPrecio"
+            android:gravity="right"
             android:text="Precio"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="       "/>
+            android:text="            "/>
     </LinearLayout>
 
     <ListView
