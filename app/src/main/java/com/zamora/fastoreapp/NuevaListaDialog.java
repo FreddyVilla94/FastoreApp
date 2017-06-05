@@ -141,11 +141,16 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener, Co
                 //nuevaLista.setId(idUsuario + strCantListas);
                 nuevaLista.setNombre(txtNombre.getText().toString());
                 nuevaLista.setIdUsuario(idUsuario);
-                nuevaLista.setFechaCompra(txtFecha.getText().toString());
+                if (switchNotificaciones.isChecked()) {
+                    nuevaLista.setFechaCompra(txtFecha.getText().toString());
+                    crearNotificacion(nuevaLista.getNombre());
+                }
+                else
+                    nuevaLista.setFechaCompra("Sin fecha");
                 nuevaLista.setContext(context);
                 nuevaLista.insertar(idUsuario);
 
-                crearNotificacion(nuevaLista.getNombre());
+
 
                 Intent intent = new Intent(context, ProductosListaActivity.class);
                 intent.putExtra("idLista", nuevaLista.getId());
@@ -218,7 +223,7 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener, Co
         // get the event ID that is the last element in the Uri
         long eventID = Long.parseLong(uri.getLastPathSegment());
         System.out.println("Se agregó el evento: " + eventID);
-        Toast.makeText(context, "Se agregó el evento: " + eventID, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Se agregó el evento: " + eventID, Toast.LENGTH_SHORT).show();
 
         cr = context.getContentResolver();
         values = new ContentValues();
