@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FasTore</string>
+    <string name="nombre_de_la_lista">Nombre de la lista</string>
+    <string name="notificaciones">NOTIFICACIONES</string>
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
+    <string name="crear">Crear</string>
 </resources>

@@ -44,7 +44,7 @@ import static android.R.attr.description;
 
 public class NuevaListaDialog extends Dialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private String idUsuario;
-    private int cantListas;
+    //private int cantListas;
     private EditText txtFecha, txtHora, txtNombre;
     private Button btnCrearLista;
     private Switch switchNotificaciones;
@@ -54,11 +54,11 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener, Co
     DatabaseReference refUSuarios = database.getReference("Usuarios");
 
 
-    public NuevaListaDialog(Context context, String idUsuario, int cantListas) {
+    public NuevaListaDialog(Context context, String idUsuario/*, int cantListas*/) {
         super(context);
         this.context = context;
         this.idUsuario = idUsuario;
-        this.cantListas = cantListas;
+        //this.cantListas = cantListas;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener, Co
         switchNotificaciones = (Switch) findViewById(R.id.switchNotification);
         btnCrearLista = (Button) findViewById(R.id.btnCrear);
 
-        txtNombre.setText("Lista de compras " + (cantListas + 1));
+        //txtNombre.setText("Lista de compras " + (cantListas + 1));
         txtFecha.setOnClickListener(this);
         txtHora.setOnClickListener(this);
         btnCrearLista.setOnClickListener(this);
@@ -136,9 +136,9 @@ public class NuevaListaDialog extends Dialog implements View.OnClickListener, Co
             case R.id.btnCrear:
                 ListaCompras nuevaLista = new ListaCompras();
                 //nuevaLista.setId(String.format("%04d%04d", Integer.parseInt(idUsuario), cantListas));
-                cantListas+=1;
-                String strCantListas = String.valueOf(cantListas);
-                nuevaLista.setId(idUsuario + strCantListas);
+                //cantListas+=1;
+                //String strCantListas = String.valueOf(cantListas);
+                //nuevaLista.setId(idUsuario + strCantListas);
                 nuevaLista.setNombre(txtNombre.getText().toString());
                 nuevaLista.setIdUsuario(idUsuario);
                 nuevaLista.setFechaCompra(txtFecha.getText().toString());

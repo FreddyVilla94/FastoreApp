@@ -210,7 +210,7 @@ public class ProductosListaActivity extends AppCompatActivity implements UpdateL
     public AlertDialog confirmSpeechText(final String speechText,final String[] parse) {
         final String capText = speechText.substring(0, 1).toUpperCase() + speechText.substring(1);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(Html.fromHtml("<font color='#263238'>Agregar</font>"))
+        builder.setTitle(Html.fromHtml("<font color='#039BE5'>Agregar</font>"))
                 .setMessage(capText)
                 .setPositiveButton("Sí",
                         new DialogInterface.OnClickListener() {

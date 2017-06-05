@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/switch_height"
-        android:text="NOTIFICACIONES"
+        android:text="@string/notificaciones"
         android:textColor="@color/colorAccent"
         android:gravity="center"
         android:layout_below="@+id/divider"
@@ -62,7 +62,7 @@
         android:layout_below="@+id/lblNotificaciones"
         android:layout_marginTop="@dimen/padding_between"
         android:ems="10"
-        android:hint="Fecha"
+        android:hint="@string/fecha"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -87,7 +87,7 @@
         android:layout_marginBottom="@dimen/padding_between"
         android:layout_marginTop="@dimen/padding_between"
         android:ems="10"
-        android:hint="Hora"
+        android:hint="@string/hora"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -112,7 +112,7 @@
         android:layout_centerHorizontal="true"
         android:paddingBottom="@dimen/padding_between"
         android:paddingTop="@dimen/padding_between"
-        android:text="Crear"
+        android:text="@string/crear"
         android:background="@color/colorAccent"/>
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -244,10 +245,11 @@ public class ListasCompraActivity extends AppCompatActivity{
                             MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
                 }
                 else {
-                    String ultimoIDLista = arregloListasCompra.get(arregloListasCompra.size() - 1).getId();
-                    String substring = ultimoIDLista.substring(Math.max(ultimoIDLista.length() - 4, 0));
-                    int ultimo = Integer.parseInt(substring);
-                    NuevaListaDialog nla = new NuevaListaDialog(ListasCompraActivity.this, idUsuario, ultimo);
+                    //String ultimoIDLista = arregloListasCompra.get(arregloListasCompra.size() - 1).getId();
+                    //String substring = ultimoIDLista.substring(Math.max(ultimoIDLista.length() - 4, 0));
+                    //int ultimo = Integer.parseInt(substring);
+                    //NuevaListaDialog nla = new NuevaListaDialog(ListasCompraActivity.this, idUsuario, ultimo);
+                    NuevaListaDialog nla = new NuevaListaDialog(ListasCompraActivity.this, idUsuario);
                     nla.show();
                 }
 
@@ -270,7 +272,7 @@ public class ListasCompraActivity extends AppCompatActivity{
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(Html.fromHtml("<font color='#263238'>Opciones</font>"));
+        builder.setTitle(Html.fromHtml("<font color='#039BE5'>Opciones</font>"));
         builder.setItems(opciones, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 if(item == 0){
@@ -309,9 +311,13 @@ public class ListasCompraActivity extends AppCompatActivity{
     public void compartirLista(final ListaCompras listaCompartir){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText correo = new EditText(this);
+        //final TextView advertencia = new TextView(this);
         correo.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        builder.setTitle(Html.fromHtml("<font color='#263238'>Compartir lista con...</font>"));
+        correo.setHint("example@example.com");
+        //advertencia.setText("NOTA: El poseedor de este correo debe estar registrado en FasTore antes de compartir esta lista");
+        builder.setTitle(Html.fromHtml("<font color='#039BE5'>Compartir lista con...</font>"));
         builder.setView(correo);
+        //builder.setView(advertencia);
         builder.setPositiveButton("Compartir", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

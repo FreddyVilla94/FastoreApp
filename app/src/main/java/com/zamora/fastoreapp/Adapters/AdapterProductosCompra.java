@@ -98,7 +98,7 @@ public class AdapterProductosCompra extends BaseAdapter implements Filterable {
         });
 
         if (dir.getInCart()) {
-            v.setBackgroundColor(Color.parseColor("#CFD8DC"));
+            v.setBackgroundColor(Color.parseColor("#23BE52"));
         } else {
             v.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
         }
